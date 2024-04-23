@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_quizzes">
+
+    <fragment
+        android:id="@+id/navigation_quizzes"
+        android:name="com.example.quizmaster.ui.quizzes.QuizzesFragment"
+        android:label="@string/title_quizzes"
+        tools:layout="@layout/fragment_quizzes" />
+
+    <fragment
+        android:id="@+id/navigation_addquiz"
+        android:name="com.example.quizmaster.ui.addquiz.AddQuizFragment"
+        android:label="@string/title_addquiz"
+        tools:layout="@layout/fragment_addquiz" />
+
+    <fragment
+        android:id="@+id/navigation_results"
+        android:name="com.example.quizmaster.ui.results.ResultsFragment"
+        android:label="@string/title_results"
+        tools:layout="@layout/fragment_results" />
+</navigation>

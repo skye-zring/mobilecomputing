@@ -1,0 +1,48 @@
+<!-- question_form.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/question_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Question Text" />
+
+    <!-- Correct Answer -->
+    <EditText
+        android:id="@+id/edit_correct_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Correct Answer" />
+
+    <!-- Wrong -->
+    <EditText
+        android:id="@+id/edit_wrong1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Wrong" />
+
+    <!-- Wrong -->
+    <EditText
+        android:id="@+id/edit_wrong2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Wrong" />
+
+    <!-- Wrong -->
+    <EditText
+        android:id="@+id/edit_wrong3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Wrong" />
+
+    <!-- Delete Question Button -->
+    <Button
+        android:id="@+id/delete_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Question" />
+
+</LinearLayout>
