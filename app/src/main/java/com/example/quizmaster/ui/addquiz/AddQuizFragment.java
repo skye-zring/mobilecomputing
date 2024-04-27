@@ -77,8 +77,7 @@ public class AddQuizFragment extends Fragment {
         questionsView.setAdapter(adapter);
         questionsView.setLayoutManager(new LinearLayoutManager(questionsView.getContext()));
     }
-    // Method to save the quiz and questions to the database
-    // Method to save the quiz and questions to the database using DbHelper
+
     private void saveQuizToDatabase() {
         DbHelper dbHelper = new DbHelper(requireContext());
         String quizTitle = binding.quizTitle.getText().toString();

@@ -50,10 +50,10 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
                         .setMessage("Are you sure you want to delete this question?")
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // Continue with delete operation
-                                questions.remove(position);
-                                notifyItemRemoved(position);
-                                notifyItemRangeChanged(position, questions.size());
+                                int currentPosition = holder.getAdapterPosition();
+                                questions.remove(currentPosition);
+                                notifyItemRemoved(currentPosition);
+                                notifyItemRangeChanged(currentPosition, questions.size());
                             }
                         })
                         .setNegativeButton(android.R.string.cancel, null)
@@ -90,7 +90,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
                 @Override
                 public void afterTextChanged(Editable s) {
                     questions.get(getAdapterPosition()).setText(s.toString());
-                    Log.d("Question:",questions.get(getAdapterPosition()).getText());
                 }
             });
 

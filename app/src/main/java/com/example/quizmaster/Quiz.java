@@ -13,8 +13,8 @@ public class Quiz {
         this.questions = new ArrayList<>();
     }
 
-    public long getId() {
-        return id;
+    public int getId() {
+        return (int) id;
     }
 
     public void setId(long id) {

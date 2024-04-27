@@ -25,25 +25,11 @@
                 android:hint="Quiz Title"
                 android:textSize="30dp"/>
 
-            <!-- Example EditText for adding more quiz details, if needed -->
-            <!--<EditText
-                android:id="@+id/quiz_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Quiz Details" />-->
-
-            <!-- Example RecyclerView for displaying questions -->
-            <!--<androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_questions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />-->
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_questions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="8dp" />
 
             <!-- "Add Question" Button -->
             <Button
@@ -51,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Add Question"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:onClick="onClickAddQuestion" />
 
@@ -61,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Save Quiz"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="#2ECC71 "
                 android:onClick="onClickSaveQuiz" />
 

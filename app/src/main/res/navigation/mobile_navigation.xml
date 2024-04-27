@@ -27,5 +27,4 @@
         android:label="@string/title_results"
         tools:layout="@layout/fragment_results" />
 
-
 </navigation>
