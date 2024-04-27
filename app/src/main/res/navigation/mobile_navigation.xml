@@ -15,11 +15,17 @@
         android:id="@+id/navigation_addquiz"
         android:name="com.example.quizmaster.ui.addquiz.AddQuizFragment"
         android:label="@string/title_addquiz"
-        tools:layout="@layout/fragment_addquiz" />
+        tools:layout="@layout/fragment_addquiz">
+        <action
+            android:id="@+id/action_AddQuizFragment_to_QuizzesFragment"
+            app:destination="@id/navigation_quizzes"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_results"
         android:name="com.example.quizmaster.ui.results.ResultsFragment"
         android:label="@string/title_results"
         tools:layout="@layout/fragment_results" />
+
+
 </navigation>

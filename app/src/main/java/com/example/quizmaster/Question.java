@@ -19,6 +19,16 @@ public class Question {
         this.quizId = quizId;
     }
 
+    public Question() {
+        this.id = -1;
+        this.text = "";
+        this.correctAnswer = "";
+        this.wrongAnswerA = "";
+        this.wrongAnswerB = "";
+        this.wrongAnswerC = "";
+        this.quizId = -1;
+    }
+
     public long getId() {
         return id;
     }
@@ -73,5 +83,9 @@ public class Question {
 
     public void setQuizId(long quizId) {
         this.quizId = quizId;
+    }
+
+    public String getQuestionDetails(){
+        return String.format("%s %s %s %s %s %s %s", id, text, correctAnswer, wrongAnswerA, wrongAnswerB, wrongAnswerC, quizId);
     }
 }

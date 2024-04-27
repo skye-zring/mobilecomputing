@@ -1,8 +1,7 @@
-<!-- question_form.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <EditText
         android:id="@+id/question_text"
@@ -15,6 +14,7 @@
         android:id="@+id/edit_correct_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/question_text"
         android:hint="Correct Answer" />
 
     <!-- Wrong -->
@@ -22,6 +22,7 @@
         android:id="@+id/edit_wrong1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/edit_correct_answer"
         android:hint="Wrong" />
 
     <!-- Wrong -->
@@ -29,6 +30,7 @@
         android:id="@+id/edit_wrong2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/edit_wrong1"
         android:hint="Wrong" />
 
     <!-- Wrong -->
@@ -36,6 +38,7 @@
         android:id="@+id/edit_wrong3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/edit_wrong2"
         android:hint="Wrong" />
 
     <!-- Delete Question Button -->
@@ -43,6 +46,8 @@
         android:id="@+id/delete_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/edit_wrong3"
+        android:backgroundTint="#EC7063"
         android:text="Delete Question" />
 
-</LinearLayout>
+</RelativeLayout>
