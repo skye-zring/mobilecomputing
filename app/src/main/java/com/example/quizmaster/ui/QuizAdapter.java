@@ -3,6 +3,7 @@ package com.example.quizmaster.ui;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizmaster.Question;
 import com.example.quizmaster.Quiz;
+import com.example.quizmaster.QuizTakingActivity;
 import com.example.quizmaster.R;
 import com.example.quizmaster.backend.DbHelper;
 
@@ -39,16 +41,35 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
     public void onBindViewHolder(QuizViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Quiz quiz = quizzes.get(position);
         holder.quizTitle.setText(quiz.getTitle());
-        holder.numberOfQuestions.setText(String.valueOf(quiz.getQuestions().size()));
+        holder.numberOfQuestions.setText(String.format("Questions: %d", quiz.getQuestions().size()));
 
         holder.deleteQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DbHelper dbHelper = new DbHelper(v.getContext());
-                dbHelper.deleteQuizAndQuestions(quiz.getId());
-                int currentPosition = holder.getAdapterPosition();
-                quizzes.remove(currentPosition);
-                notifyItemRemoved(currentPosition);
+                new AlertDialog.Builder(v.getContext())
+                        .setTitle("Delete Quiz")
+                        .setMessage("Are you sure you want to delete this quiz?")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                DbHelper dbHelper = new DbHelper(v.getContext());
+                                dbHelper.deleteQuizAndQuestions(quiz.getId());
+                                int currentPosition = holder.getAdapterPosition();
+                                quizzes.remove(currentPosition);
+                                notifyItemRemoved(currentPosition);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setIcon(R.drawable.ic_alert)
+                        .show();
+            }
+
+        });
+        holder.startQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), QuizTakingActivity.class);
+                intent.putExtra("QuizId", quiz.getId());
+                v.getContext().startActivity(intent);
             }
         });
     }
