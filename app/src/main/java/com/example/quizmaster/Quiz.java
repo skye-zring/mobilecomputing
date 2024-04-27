@@ -6,15 +6,21 @@ public class Quiz {
     private long id;
     private String title;
     private ArrayList<Question> questions;
+    private int pos = 0;
 
     public Quiz(String title) {
         this.id = -1;
         this.title = title;
         this.questions = new ArrayList<>();
+        this.pos = 0;
     }
 
     public int getId() {
         return (int) id;
+    }
+
+    public Question getCurrentQuestion(){
+        return questions.get(pos);
     }
 
     public void setId(long id) {

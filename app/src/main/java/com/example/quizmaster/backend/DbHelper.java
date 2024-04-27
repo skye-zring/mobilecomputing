@@ -149,4 +149,43 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    @SuppressLint("Range")
+    public Quiz getQuiz(int quizId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_QUIZ, new String[] { COLUMN_ID,
+                        COLUMN_QUIZ_TITLE }, COLUMN_ID + "=?",
+                new String[] { String.valueOf(quizId) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Quiz quiz = new Quiz(cursor.getString(1));
+        quiz.setId(Integer.parseInt(cursor.getString(0)));
+
+        // Fetch the questions for this quiz
+        String selectQuestionQuery = "SELECT  * FROM " + TABLE_QUESTION + " WHERE " + COLUMN_QUIZ_ID + " = " + quiz.getId();
+        Cursor questionCursor = db.rawQuery(selectQuestionQuery, null);
+
+        if (questionCursor.moveToFirst()) {
+            do {
+                Question question = new Question();
+                question.setText(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_QUESTION_TEXT)));
+                question.setCorrectAnswer(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_CORRECT_ANSWER)));
+                question.setWrongAnswerA(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_WRONG_ANSWER_A)));
+                question.setWrongAnswerB(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_WRONG_ANSWER_B)));
+                question.setWrongAnswerC(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_WRONG_ANSWER_C)));
+                question.setQuizId(questionCursor.getInt(questionCursor.getColumnIndex(COLUMN_QUIZ_ID)));
+
+                // Add the question to the quiz
+                quiz.addQuestion(question);
+            } while (questionCursor.moveToNext());
+        }
+
+        // don't forget to close the cursors
+        questionCursor.close();
+        cursor.close();
+
+        return quiz;
+    }
+
 }
