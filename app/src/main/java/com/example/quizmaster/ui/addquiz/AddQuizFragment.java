@@ -38,7 +38,6 @@ public class AddQuizFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        AddQuizViewModel addQuizViewModel = new ViewModelProvider(this).get(AddQuizViewModel.class);
         binding = FragmentAddquizBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 

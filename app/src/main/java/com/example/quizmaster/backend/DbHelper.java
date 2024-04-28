@@ -218,6 +218,39 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
+    @SuppressLint("Range")
+    public List<QuizResult> getAllQuizResults() {
+        List<QuizResult> quizResults = new ArrayList<>();
+        String selectQuizResultQuery = "SELECT  * FROM " + TABLE_QUIZ_RESULT;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor quizResultCursor = db.rawQuery(selectQuizResultQuery, null);
+
+        if (quizResultCursor.moveToFirst()) {
+            do {
+                QuizResult quizResult = new QuizResult(quizResultCursor.getLong(quizResultCursor.getColumnIndex(COLUMN_QUIZ_ID_REF)));
+                quizResult.setId(quizResultCursor.getLong(quizResultCursor.getColumnIndex(COLUMN_ID)));
+
+                String selectQuestionResultQuery = "SELECT  * FROM " + TABLE_QUESTION_RESULT + " WHERE " + COLUMN_QUIZ_RESULT_ID_REF + " = " + quizResult.getId();
+                Cursor questionResultCursor = db.rawQuery(selectQuestionResultQuery, null);
+
+                if (questionResultCursor.moveToFirst()) {
+                    do {
+                        QuestionResult questionResult = new QuestionResult(questionResultCursor.getLong(questionResultCursor.getColumnIndex(COLUMN_QUESTION_ID_REF)), questionResultCursor.getString(questionResultCursor.getColumnIndex(COLUMN_ANSWER_PROVIDED)));
+                        questionResult.setId(questionResultCursor.getLong(questionResultCursor.getColumnIndex(COLUMN_ID)));
+                        quizResult.addResult(questionResult);
+                    } while (questionResultCursor.moveToNext());
+                }
+
+                questionResultCursor.close();
+                quizResults.add(quizResult);
+            } while (quizResultCursor.moveToNext());
+        }
+
+        quizResultCursor.close();
+        db.close();
+        return quizResults;
+    }
 
     @SuppressLint("Range")
     public List<Quiz> getAllQuizzes() {
@@ -263,6 +296,25 @@ public class DbHelper extends SQLiteOpenHelper {
     public void deleteQuizAndQuestions(int quizId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
+        Cursor cursor = db.query(TABLE_QUIZ_RESULT,
+                new String[]{COLUMN_ID},
+                COLUMN_QUIZ_ID_REF + " = ?",
+                new String[]{String.valueOf(quizId)},
+                null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int quizResultId = cursor.getInt(0);
+
+                // Delete all question results associated with the quiz result
+                db.delete(TABLE_QUESTION_RESULT, COLUMN_QUIZ_RESULT_ID_REF + " = ?", new String[]{String.valueOf(quizResultId)});
+
+                // Delete the quiz result
+                db.delete(TABLE_QUIZ_RESULT, COLUMN_ID + " = ?", new String[]{String.valueOf(quizResultId)});
+
+            } while (cursor.moveToNext());
+        }
+
         // Delete all questions associated with the quiz
         db.delete(TABLE_QUESTION, COLUMN_QUIZ_ID + " = ?", new String[]{String.valueOf(quizId)});
 
@@ -271,6 +323,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         db.close();
     }
+
 
     @SuppressLint("Range")
     public Quiz getQuiz(int quizId) {

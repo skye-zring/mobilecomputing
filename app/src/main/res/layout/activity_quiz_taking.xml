@@ -17,7 +17,7 @@ android:padding="10dp">
     app:layout_constraintBottom_toTopOf="@+id/questionField"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginTop="40dp"/>
+    android:layout_marginTop="50dp"/>
 
 <TextView
     android:id="@+id/questionField"
@@ -43,8 +43,8 @@ android:padding="10dp">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/answer2"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_margin="10dp"
-        android:padding="10dp"/>
+        android:layout_margin="5dp"
+        android:padding="5dp"/>
 
     <Button
         android:id="@+id/answer2"
@@ -57,8 +57,8 @@ android:padding="10dp">
         app:layout_constraintStart_toEndOf="@+id/answer1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_margin="10dp"
-        android:padding="10dp"/>
+        android:layout_margin="5dp"
+        android:padding="5dp"/>
 
     <Button
         android:id="@+id/answer3"
@@ -71,8 +71,8 @@ android:padding="10dp">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/answer4"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_margin="10dp"
-        android:padding="10dp"/>
+        android:layout_margin="5dp"
+        android:padding="5dp"/>
 
     <Button
         android:id="@+id/answer4"
@@ -85,8 +85,8 @@ android:padding="10dp">
         app:layout_constraintStart_toEndOf="@+id/answer3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_margin="10dp"
-        android:padding="10dp"/>
+        android:layout_margin="5dp"
+        android:padding="5dp"/>
 
     <Button
         android:id="@+id/stopQuiz"

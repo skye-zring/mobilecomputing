@@ -30,7 +30,6 @@ public class QuizzesFragment extends Fragment {
     private DbHelper dbHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        QuizzesModel quizzesModel = new ViewModelProvider(this).get(QuizzesModel.class);
 
         binding = FragmentQuizzesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
