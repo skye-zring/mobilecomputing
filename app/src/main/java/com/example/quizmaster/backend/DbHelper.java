@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.quizmaster.Question;
+import com.example.quizmaster.QuestionResult;
 import com.example.quizmaster.Quiz;
+import com.example.quizmaster.QuizResult;
 import com.example.quizmaster.ui.addquiz.AddQuizFragment;
 
 import java.util.ArrayList;
@@ -35,6 +37,18 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_WRONG_ANSWER_B = "wrong_answer_b";
     public static final String COLUMN_WRONG_ANSWER_C = "wrong_answer_c";
     public static final String COLUMN_QUIZ_ID = "quiz_id";
+
+    // Result tables
+    public static final String TABLE_QUIZ_RESULT = "quiz_result";
+    public static final String TABLE_QUESTION_RESULT = "question_result";
+
+    // QuizResult table columns
+    public static final String COLUMN_QUIZ_ID_REF = "quiz_id_ref";
+
+    // QuestionResult table columns
+    public static final String COLUMN_QUESTION_ID_REF = "question_id_ref";
+    public static final String COLUMN_QUIZ_RESULT_ID_REF = "quiz_result_id_ref";
+    public static final String COLUMN_ANSWER_PROVIDED = "answer_provided";
 
 
     public DbHelper(Context context) {
@@ -63,6 +77,25 @@ public class DbHelper extends SQLiteOpenHelper {
                 + "FOREIGN KEY(" + COLUMN_QUIZ_ID + ") REFERENCES " + TABLE_QUIZ + "(" + COLUMN_ID + ")"
                 + ")";
         db.execSQL(CREATE_QUESTION_TABLE);
+
+        // Creating QuizResult table
+        String CREATE_QUIZ_RESULT_TABLE = "CREATE TABLE " + TABLE_QUIZ_RESULT + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY,"
+                + COLUMN_QUIZ_ID_REF + " INTEGER,"
+                + "FOREIGN KEY(" + COLUMN_QUIZ_ID_REF + ") REFERENCES " + TABLE_QUIZ + "(" + COLUMN_ID + ")"
+                + ")";
+        db.execSQL(CREATE_QUIZ_RESULT_TABLE);
+
+        // Creating QuestionResult table
+        String CREATE_QUESTION_RESULT_TABLE = "CREATE TABLE " + TABLE_QUESTION_RESULT + "("
+                + COLUMN_ID + " INTEGER PRIMARY KEY,"
+                + COLUMN_QUESTION_ID_REF + " INTEGER,"
+                + COLUMN_QUIZ_RESULT_ID_REF + " INTEGER,"
+                + COLUMN_ANSWER_PROVIDED + " TEXT,"
+                + "FOREIGN KEY(" + COLUMN_QUESTION_ID_REF + ") REFERENCES " + TABLE_QUESTION + "(" + COLUMN_ID + "),"
+                + "FOREIGN KEY(" + COLUMN_QUIZ_RESULT_ID_REF + ") REFERENCES " + TABLE_QUIZ_RESULT + "(" + COLUMN_ID + ")"
+                + ")";
+        db.execSQL(CREATE_QUESTION_RESULT_TABLE);
     }
 
     @Override
@@ -70,6 +103,8 @@ public class DbHelper extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUIZ_RESULT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_QUESTION_RESULT);
         // Create tables again
         onCreate(db);
     }
@@ -94,6 +129,27 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(COLUMN_QUIZ_ID, question.getQuizId());
         long id = db.insert(TABLE_QUESTION, null, values);
         db.close(); // Closing database connection
+        return id;
+    }
+
+    public long insertQuizResult(QuizResult quizResult) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_QUIZ_ID_REF, quizResult.getQuizId());
+        long id = db.insert(TABLE_QUIZ_RESULT, null, values);
+        db.close();
+        return id;
+    }
+
+    // Method to insert a QuestionResult
+    public long insertQuestionResult(QuestionResult questionResult, long quizResultId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_QUESTION_ID_REF, questionResult.getQuestionId());
+        values.put(COLUMN_QUIZ_RESULT_ID_REF, quizResultId);
+        values.put(COLUMN_ANSWER_PROVIDED, questionResult.getAnswer());
+        long id = db.insert(TABLE_QUESTION_RESULT, null, values);
+        db.close();
         return id;
     }
 
@@ -122,6 +178,7 @@ public class DbHelper extends SQLiteOpenHelper {
                         question.setWrongAnswerB(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_WRONG_ANSWER_B)));
                         question.setWrongAnswerC(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_WRONG_ANSWER_C)));
                         question.setQuizId(questionCursor.getLong(questionCursor.getColumnIndex(COLUMN_QUIZ_ID)));
+                        question.setId(questionCursor.getLong(questionCursor.getColumnIndex(COLUMN_QUIZ_ID)));
                         quiz.addQuestion(question);
                     } while (questionCursor.moveToNext());
                 }
@@ -175,8 +232,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 question.setWrongAnswerB(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_WRONG_ANSWER_B)));
                 question.setWrongAnswerC(questionCursor.getString(questionCursor.getColumnIndex(COLUMN_WRONG_ANSWER_C)));
                 question.setQuizId(questionCursor.getInt(questionCursor.getColumnIndex(COLUMN_QUIZ_ID)));
-
-                // Add the question to the quiz
+                question.setId(questionCursor.getLong(questionCursor.getColumnIndex(COLUMN_ID)));
                 quiz.addQuestion(question);
             } while (questionCursor.moveToNext());
         }

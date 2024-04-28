@@ -37,7 +37,6 @@ public class QuizzesFragment extends Fragment {
 
         dbHelper = new DbHelper(getContext());
         quizzes = dbHelper.getAllQuizzes();
-        Log.d("Question:",quizzes.toString());
         quizzesView = root.findViewById(R.id.recycler_view_quizzes);
         setUpRecyclerView();
 
@@ -53,6 +52,7 @@ public class QuizzesFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        dbHelper.close();
         binding = null;
     }
 }

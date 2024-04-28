@@ -41,7 +41,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
     public void onBindViewHolder(QuizViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Quiz quiz = quizzes.get(position);
         holder.quizTitle.setText(quiz.getTitle());
-        holder.numberOfQuestions.setText(String.format("Questions: %d", quiz.getQuestions().size()));
+        holder.numberOfQuestions.setText(String.format("Questions: %d", quiz.getAmountOfQuestions()));
 
         holder.deleteQuiz.setOnClickListener(new View.OnClickListener() {
             @Override

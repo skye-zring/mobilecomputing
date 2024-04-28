@@ -6,13 +6,14 @@ public class Quiz {
     private long id;
     private String title;
     private ArrayList<Question> questions;
-    private int pos = 0;
+    private int pos;
+
 
     public Quiz(String title) {
         this.id = -1;
         this.title = title;
         this.questions = new ArrayList<>();
-        this.pos = 0;
+        this.pos = -1;
     }
 
     public int getId() {
@@ -45,5 +46,21 @@ public class Quiz {
 
     public void addQuestion(Question question) {
         this.questions.add(question);
+    }
+
+    public int getAmountOfQuestions(){
+        return questions.size();
+    }
+
+    public int getPos(){
+        return pos;
+    }
+
+    public Question getNextQuestion(){
+        pos += 1;
+        if (pos != getAmountOfQuestions()){
+            return questions.get(pos);
+        }
+        return null;
     }
 }
