@@ -109,14 +109,80 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public Question getQuestionById(long id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_QUESTION,
+                new String[]{COLUMN_ID, COLUMN_QUESTION_TEXT, COLUMN_CORRECT_ANSWER, COLUMN_WRONG_ANSWER_A, COLUMN_WRONG_ANSWER_B, COLUMN_WRONG_ANSWER_C, COLUMN_QUIZ_ID},
+                COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Question question = new Question();
+        question.setId(cursor.getLong(0));
+        question.setText(cursor.getString(1));
+        question.setCorrectAnswer(cursor.getString(2));
+        question.setWrongAnswerA(cursor.getString(3));
+        question.setWrongAnswerB(cursor.getString(4));
+        question.setWrongAnswerC(cursor.getString(5));
+        question.setQuizId(cursor.getLong(6));
+
+        cursor.close();
+        db.close();
+        return question;
+    }
+
     public long insertQuiz(Quiz quiz) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_QUIZ_TITLE, quiz.getTitle());
         long id = db.insert(TABLE_QUIZ, null, values);
-        db.close(); // Closing database connection
+        db.close();
         return id;
     }
+
+    public QuizResult getQuizResultById(long id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Query the QuizResult table
+        Cursor quizResultCursor = db.query(TABLE_QUIZ_RESULT,
+                new String[]{COLUMN_ID, COLUMN_QUIZ_ID_REF},
+                COLUMN_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (quizResultCursor != null)
+            quizResultCursor.moveToFirst();
+
+        QuizResult quizResult = new QuizResult(
+                quizResultCursor.getLong(1));
+        quizResult.setId(quizResultCursor.getLong(0));
+
+        Cursor questionResultCursor = db.query(TABLE_QUESTION_RESULT,
+                new String[]{COLUMN_ID, COLUMN_QUESTION_ID_REF, COLUMN_ANSWER_PROVIDED},
+                COLUMN_QUIZ_RESULT_ID_REF + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (questionResultCursor.moveToFirst()) {
+            do {
+                QuestionResult questionResult = new QuestionResult(
+                        questionResultCursor.getLong(1),
+                        questionResultCursor.getString(2));
+                questionResult.setId(questionResultCursor.getLong(0));
+                quizResult.addResult(questionResult);
+            } while (questionResultCursor.moveToNext());
+        }
+
+        quizResultCursor.close();
+        questionResultCursor.close();
+        db.close();
+        return quizResult;
+    }
+
 
     public long insertQuestion(Question question) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -128,7 +194,7 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(COLUMN_WRONG_ANSWER_C, question.getWrongAnswerC());
         values.put(COLUMN_QUIZ_ID, question.getQuizId());
         long id = db.insert(TABLE_QUESTION, null, values);
-        db.close(); // Closing database connection
+        db.close();
         return id;
     }
 
@@ -240,7 +306,7 @@ public class DbHelper extends SQLiteOpenHelper {
         // don't forget to close the cursors
         questionCursor.close();
         cursor.close();
-
+        db.close();
         return quiz;
     }
 

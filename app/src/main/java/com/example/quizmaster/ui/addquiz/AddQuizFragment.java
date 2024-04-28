@@ -62,7 +62,6 @@ public class AddQuizFragment extends Fragment {
     private void addQuestionForm(LayoutInflater inflater, ViewGroup container) {
         // Create a new Question object
         Question newQuestion = new Question();
-        Log.d("Question:",newQuestion.getQuestionDetails());
         // Add the new question to the questions list
         questions.add(newQuestion);
 

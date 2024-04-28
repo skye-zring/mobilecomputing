@@ -9,7 +9,7 @@ public class QuizResult {
     private long quizId;
 
     public QuizResult(long quizId){
-        this.id = id;
+        this.id = -1;
         this.results =  new ArrayList<>();
         this.quizId = quizId;
     }

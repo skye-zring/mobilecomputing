@@ -1,6 +1,9 @@
 package com.example.quizmaster;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        WindowInsetsController controller = getWindow().getDecorView().getWindowInsetsController();
+        if (controller != null) {
+            controller.hide(WindowInsets.Type.navigationBars());
+        }
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

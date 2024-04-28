@@ -2,9 +2,12 @@ package com.example.quizmaster;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,6 +40,10 @@ public class QuizTakingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        WindowInsetsController controller = getWindow().getDecorView().getWindowInsetsController();
+        if (controller != null) {
+            controller.hide(WindowInsets.Type.navigationBars());
+        }
         super.onCreate(savedInstanceState);
         dbHelper = new DbHelper(this);
         EdgeToEdge.enable(this);
@@ -108,13 +115,15 @@ public class QuizTakingActivity extends AppCompatActivity {
     private void DisplayNextQuestion(String answer){
         if(answer != null){
             QuestionResult qResult = new QuestionResult(quiz.getCurrentQuestion().getId(), answer);
-            Log.d("QuestionId", String.valueOf(quiz.getCurrentQuestion().getId()));
             quizResult.addResult(qResult);
         }
         current = quiz.getNextQuestion();
         if(current == null) {
-            saveResultsToDatabase();
+            long id = saveResultsToDatabase();
             finish();
+            Intent intent = new Intent(this, ResultsActivity.class);
+            intent.putExtra("ResultId", id);
+            startActivity(intent);
             return;
         }
         List<String> answers = new ArrayList<>();
@@ -133,13 +142,14 @@ public class QuizTakingActivity extends AppCompatActivity {
         answer4.setText(answers.get(3));
     }
 
-    private void saveResultsToDatabase(){
+    private long saveResultsToDatabase(){
         long quizResultId = dbHelper.insertQuizResult(quizResult);
         quizResult.setId(quizResultId);
         for (QuestionResult questionResult : quizResult.getResults()){
             long questionResultId = dbHelper.insertQuestionResult(questionResult, quizResultId);
             questionResult.setId(questionResultId);
         }
+        return quizResultId;
     }
 
     @Override
