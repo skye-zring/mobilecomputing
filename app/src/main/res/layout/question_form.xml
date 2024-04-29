@@ -16,7 +16,9 @@
             android:id="@+id/question_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Question Text" />
+            android:hint="Question Text"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
         <!-- Correct Answer -->
         <EditText
@@ -24,7 +26,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/question_text"
-            android:hint="Correct Answer" />
+            android:hint="Correct Answer"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
         <!-- Wrong -->
         <EditText
@@ -32,7 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/edit_correct_answer"
-            android:hint="Wrong" />
+            android:hint="Wrong"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
         <!-- Wrong -->
         <EditText
@@ -40,7 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/edit_wrong1"
-            android:hint="Wrong" />
+            android:hint="Wrong"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
         <!-- Wrong -->
         <EditText
@@ -48,7 +56,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/edit_wrong2"
-            android:hint="Wrong" />
+            android:hint="Wrong"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
         <!-- Delete Question Button -->
         <Button

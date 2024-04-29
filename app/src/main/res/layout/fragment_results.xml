@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation">
@@ -18,11 +19,22 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+            <TextView
+                android:id="@+id/text_view_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Results from previous quizzes you have completed will be displayed here"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_results"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="8dp" />
 
         </LinearLayout>
 

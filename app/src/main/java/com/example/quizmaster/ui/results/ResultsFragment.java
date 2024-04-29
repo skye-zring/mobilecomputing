@@ -55,6 +55,17 @@ public class ResultsFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        results = dbHelper.getAllQuizResults();
+        List<QuizResult> reversedResults = new ArrayList<>(results);
+        Collections.reverse(reversedResults);
+        adapter = new ResultQuizAdapter(reversedResults, dbHelper);
+        resultsView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         dbHelper.close();

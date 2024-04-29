@@ -18,11 +18,22 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+            <TextView
+                android:id="@+id/text_view_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You can add a new quiz by pressing the Add Quiz button at the bottom of the screen"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:textSize="16sp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_quizzes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="8dp" />
 
         </LinearLayout>
 
