@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp">
 
+        <!-- Field for entering question text -->
         <EditText
             android:id="@+id/question_text"
             android:layout_width="match_parent"

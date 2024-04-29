@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Scroll view to make the screen scrollable -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,6 +19,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+            <!-- Text message informing users how to add new quiz -->
             <TextView
                 android:id="@+id/text_view_results"
                 android:layout_width="wrap_content"
@@ -29,6 +31,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"/>
 
+            <!-- list of quizes -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_quizzes"
                 android:layout_width="match_parent"

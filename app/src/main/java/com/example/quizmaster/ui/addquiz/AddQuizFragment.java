@@ -41,13 +41,15 @@ public class AddQuizFragment extends Fragment {
         binding = FragmentAddquizBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //setting up recycelr view
         questionsView = root.findViewById(R.id.recycler_view_questions);
         setUpRecyclerView();
 
-        // Find the "Add Question" button and set its click listener
+        // Find the add question button and set its click listener
         Button addQuestionButton = root.findViewById(R.id.add_question);
         addQuestionButton.setOnClickListener(v -> addQuestionForm(inflater, container));
 
+        // find the save button and set its click listener
         Button saveQuizButton = root.findViewById(R.id.save_quiz);
         saveQuizButton.setOnClickListener(v -> saveQuizToDatabase());
 
@@ -57,25 +59,28 @@ public class AddQuizFragment extends Fragment {
 
     }
 
-    // Method to add the question form
+    // adding a new question form
     private void addQuestionForm(LayoutInflater inflater, ViewGroup container) {
-        // Create a new Question object
+        // create a new question object
         Question newQuestion = new Question();
-        // Add the new question to the questions list
+        // add the new question to the questions list
         questions.add(newQuestion);
 
-        // Notify the adapter that an item has been inserted
+        // notify the adapter that an item has been inserted
         adapter.notifyItemInserted(questions.size() - 1);
 
-        // Scroll to the position of the new item
+        // scroll to the position of the new item
         questionsView.scrollToPosition(questions.size() - 1);
     }
+
+    //setting up lsit of quiz forms
     private void setUpRecyclerView() {
         adapter = new QuestionAdapter(questions);
         questionsView.setAdapter(adapter);
         questionsView.setLayoutManager(new LinearLayoutManager(questionsView.getContext()));
     }
 
+    //saving everythong to db with error handling
     private void saveQuizToDatabase() {
         DbHelper dbHelper = new DbHelper(requireContext());
         String quizTitle = binding.quizTitle.getText().toString();
@@ -102,13 +107,13 @@ public class AddQuizFragment extends Fragment {
         }
 
         for (Question question : questions) {
-            // Check if any fields are empty
+            // dheck if any fields are empty
             if (question.getText().trim().isEmpty() ||
                     question.getCorrectAnswer().trim().isEmpty() ||
                     question.getWrongAnswerA().trim().isEmpty() ||
                     question.getWrongAnswerB().trim().isEmpty() ||
                     question.getWrongAnswerC().trim().isEmpty()) {
-                // Raise an alert and cancel the save operation if any field is empty
+                // raise an alert and cancel the save operation if any field is empty
                 AlertDialog.Builder builder;
                 builder = new AlertDialog.Builder(requireContext());
                 builder.setMessage("All question fields must be filled.")
@@ -123,7 +128,7 @@ public class AddQuizFragment extends Fragment {
         quiz.setId(quizid);
 
         for (Question question : questions) {
-            // Create a new Question object and associate it with the quiz using the generated quizId
+            // create a new question object and associate it with quiz using the generated quizId
             question.setQuizId(quizid);
             Question newQuestion = new Question(
                     question.getText(),

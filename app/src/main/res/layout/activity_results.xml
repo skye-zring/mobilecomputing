@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ResultsActivity">
 
+    <!-- scroll view to make content scrollable  -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -22,6 +23,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+            <!-- label for quiz result  -->
             <TextView
                 android:id="@+id/result_title"
                 android:layout_width="wrap_content"
@@ -30,6 +32,7 @@
                 android:layout_marginTop="50dp"
                 android:textSize="30dp" />
 
+            <!-- list of result cards -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_question_results"
                 android:layout_width="match_parent"
@@ -49,6 +52,7 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
+        <!-- button for retrying quiz  -->
         <Button
             android:id="@+id/restart_quiz"
             android:layout_width="wrap_content"
@@ -56,6 +60,7 @@
             android:layout_marginRight="10dp"
             android:text="Retry Quiz" />
 
+        <!-- button for closing result  -->
         <Button
             android:id="@+id/results_home"
             android:layout_width="wrap_content"

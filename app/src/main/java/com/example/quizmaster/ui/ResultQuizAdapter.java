@@ -39,7 +39,7 @@ public class ResultQuizAdapter extends RecyclerView.Adapter<ResultQuizAdapter.Re
         QuizResult result = results.get(position);
         holder.resultIdentifier.setText("ResultID: " + result.getId());
 
-        // Get the quiz using the dbHelper and set the title
+        // get the quiz using the dbHelper and set the title
         Quiz quiz = dbHelper.getQuiz((int) result.getQuizId());
         if (quiz != null) {
             holder.resultTitle.setText(quiz.getTitle());

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Scroll view to make the screen scrollable -->
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
@@ -19,6 +20,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+            <!-- Message to inform users what will be on the screen -->
             <TextView
                 android:id="@+id/text_view_results"
                 android:layout_width="wrap_content"
@@ -30,6 +32,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"/>
 
+            <!-- recycelr view for list of results -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_results"
                 android:layout_width="match_parent"

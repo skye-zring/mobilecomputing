@@ -34,14 +34,17 @@ public class QuizzesFragment extends Fragment {
         binding = FragmentQuizzesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //setting dbhelper and getting all quizes
         dbHelper = new DbHelper(getContext());
         quizzes = dbHelper.getAllQuizzes();
+        //recycler view setup
         quizzesView = root.findViewById(R.id.recycler_view_quizzes);
         setUpRecyclerView();
 
         return root;
     }
 
+    //recycler view adapter
     private void setUpRecyclerView() {
         adapter = new QuizAdapter(quizzes);
         quizzesView.setAdapter(adapter);

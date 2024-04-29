@@ -38,14 +38,17 @@ public class ResultsFragment extends Fragment {
         binding = FragmentResultsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //getting quiz reuslts with dbhelper
         dbHelper = new DbHelper(getContext());
         results = dbHelper.getAllQuizResults();
+        //recycler view for reuslts
         resultsView = root.findViewById(R.id.recycler_view_results);
         setUpRecyclerView();
 
         return root;
     }
 
+    //setting adapater
     private void setUpRecyclerView() {
         List<QuizResult> reversedResults = new ArrayList<>(results);
         Collections.reverse(reversedResults);
@@ -54,6 +57,7 @@ public class ResultsFragment extends Fragment {
         resultsView.setLayoutManager(new LinearLayoutManager(resultsView.getContext()));
     }
 
+    // for when users go back to results screen with new result. Ensures reuslts are up to date
     @Override
     public void onResume() {
         super.onResume();

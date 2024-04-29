@@ -63,7 +63,6 @@ public class ResultQuestionsAdapter extends RecyclerView.Adapter<ResultQuestions
         TextView resultQuestion;
         TextView providedAnswer;
         TextView correctAnswer;
-        TextView resultStatus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

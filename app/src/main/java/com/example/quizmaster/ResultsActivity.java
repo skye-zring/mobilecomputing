@@ -31,6 +31,7 @@ public class ResultsActivity extends AppCompatActivity {
     private DbHelper dbHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //remove android nav buttons
         WindowInsetsController controller = getWindow().getDecorView().getWindowInsetsController();
         if (controller != null) {
             controller.hide(WindowInsets.Type.navigationBars());
@@ -39,21 +40,25 @@ public class ResultsActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         ActivityResultsBinding binding = ActivityResultsBinding.inflate(getLayoutInflater());
         View root = binding.getRoot();
-        setContentView(root);  // Use the root view from your binding
+        setContentView(root);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        //db helper instance
         dbHelper = new DbHelper(this);
+        // create recycler view for results
         resultsView = root.findViewById(R.id.recycler_view_question_results);
         ResultId = getIntent().getLongExtra("ResultId", -1);
         quizResult = dbHelper.getQuizResultById(ResultId);
         setUpRecyclerView();
 
+        //set up buttons
         Button restartQuizButton = findViewById(R.id.restart_quiz);
         Button resultsHomeButton = findViewById(R.id.results_home);
 
+        //onclick for restart quiz. restarts quiz from this result
         restartQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +69,7 @@ public class ResultsActivity extends AppCompatActivity {
             }
         });
 
+        // closes the intent
         resultsHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +79,7 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
 
-
+    //recycler view part for displaying list of results
     private void setUpRecyclerView() {
         adapter = new ResultQuestionsAdapter(quizResult.getResults(), dbHelper);
         resultsView.setAdapter(adapter);

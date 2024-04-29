@@ -40,11 +40,13 @@ public class QuizTakingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //hiding the built in android nav
         WindowInsetsController controller = getWindow().getDecorView().getWindowInsetsController();
         if (controller != null) {
             controller.hide(WindowInsets.Type.navigationBars());
         }
         super.onCreate(savedInstanceState);
+        //creating dbhelper instance to interact with db
         dbHelper = new DbHelper(this);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_quiz_taking);
@@ -69,18 +71,20 @@ public class QuizTakingActivity extends AppCompatActivity {
         answer3 = findViewById(R.id.answer3);
         answer4 = findViewById(R.id.answer4);
         stopQuiz = findViewById(R.id.stopQuiz);
-
         quizTitle.setText(quiz.getTitle());
 
+        //populating the fileds with the first question
         DisplayNextQuestion(null);
 
         // Set up the stop quiz button
         stopQuiz.setOnClickListener(v -> {
 
+            //asking the user if they are sure
             new AlertDialog.Builder(v.getContext())
                     .setTitle("Stop Quiz")
                     .setMessage("Are you sure you want to abandon this quiz?")
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        //finishing the intent if they choose to close
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
                         }
@@ -90,6 +94,7 @@ public class QuizTakingActivity extends AppCompatActivity {
                     .show();
         });
 
+        // onlicks for the answer buttons
         View.OnClickListener answerButtonClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,12 +117,16 @@ public class QuizTakingActivity extends AppCompatActivity {
         return quiz;
     }
 
+    //displays the next question from the quiz
     private void DisplayNextQuestion(String answer){
+        //add question result for this answer to the quiz result object
         if(answer != null){
             QuestionResult qResult = new QuestionResult(quiz.getCurrentQuestion().getId(), answer);
             quizResult.addResult(qResult);
         }
+        //go to next question
         current = quiz.getNextQuestion();
+        //if next question is null, it means quiz is finished so save result to db.
         if(current == null) {
             long id = saveResultsToDatabase();
             finish();
@@ -126,6 +135,7 @@ public class QuizTakingActivity extends AppCompatActivity {
             startActivity(intent);
             return;
         }
+        //get the possible answers from the current question
         List<String> answers = new ArrayList<>();
         answers.add(current.getCorrectAnswer());
         answers.add(current.getWrongAnswerA());
@@ -142,6 +152,7 @@ public class QuizTakingActivity extends AppCompatActivity {
         answer4.setText(answers.get(3));
     }
 
+    // saving quiz results to db
     private long saveResultsToDatabase(){
         long quizResultId = dbHelper.insertQuizResult(quizResult);
         quizResult.setId(quizResultId);
@@ -152,6 +163,7 @@ public class QuizTakingActivity extends AppCompatActivity {
         return quizResultId;
     }
 
+    //close dbhelper when done
     @Override
     protected void onDestroy() {
         dbHelper.close();

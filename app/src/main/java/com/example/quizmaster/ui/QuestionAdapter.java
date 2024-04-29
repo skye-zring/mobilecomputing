@@ -27,6 +27,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         this.questions = questions;
     }
 
+    //layout
     @Override
     public QuestionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.question_form, parent, false);
@@ -35,13 +36,14 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
 
     @Override
     public void onBindViewHolder(QuestionViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        //bindings
         Question question = questions.get(position);
         holder.questionText.setText(question.getText());
         holder.correctAnswer.setText(question.getCorrectAnswer());
         holder.wrongAnswerA.setText(question.getWrongAnswerA());
         holder.wrongAnswerB.setText(question.getWrongAnswerB());
         holder.wrongAnswerC.setText(question.getWrongAnswerC());
-        // Set an OnClickListener for the deleteQuestion button
+        // listner for delete button
         holder.deleteQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,6 +52,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
                         .setMessage("Are you sure you want to delete this question?")
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
+                                //delete current quiz form
                                 int currentPosition = holder.getAdapterPosition();
                                 questions.remove(currentPosition);
                                 notifyItemRemoved(currentPosition);
@@ -69,6 +72,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         return questions.size();
     }
 
+    //view holder
     public class QuestionViewHolder extends RecyclerView.ViewHolder {
         public EditText questionText;
         public EditText correctAnswer;
@@ -77,6 +81,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.Questi
         public EditText wrongAnswerC;
         public Button deleteQuestion;
 
+        //setting up values and watching for changes and updating values
         public QuestionViewHolder(View itemView) {
             super(itemView);
             questionText = itemView.findViewById(R.id.question_text);

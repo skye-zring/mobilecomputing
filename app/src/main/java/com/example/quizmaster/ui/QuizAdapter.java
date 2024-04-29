@@ -24,6 +24,7 @@ import com.example.quizmaster.backend.DbHelper;
 
 import java.util.List;
 
+//adapter for quiz list
 public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder> {
     private List<Quiz> quizzes;
 

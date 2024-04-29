@@ -55,7 +55,7 @@ public class DbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
+    //creating all the tables
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Creating Quiz table
@@ -109,6 +109,7 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //retrieve question
     public Question getQuestionById(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -135,6 +136,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return question;
     }
 
+    //insert quiz
     public long insertQuiz(Quiz quiz) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -144,6 +146,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    //get quiz result from an id
     public QuizResult getQuizResultById(long id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -184,6 +187,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 
+    //insert a question
     public long insertQuestion(Question question) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -198,6 +202,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
+    //insert a quiz result
     public long insertQuizResult(QuizResult quizResult) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -207,7 +212,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Method to insert a QuestionResult
+    // inserting question result
     public long insertQuestionResult(QuestionResult questionResult, long quizResultId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -218,6 +223,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return id;
     }
+    // getting all the quiz results
     @SuppressLint("Range")
     public List<QuizResult> getAllQuizResults() {
         List<QuizResult> quizResults = new ArrayList<>();
@@ -252,6 +258,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return quizResults;
     }
 
+    //geting all the quizzes
     @SuppressLint("Range")
     public List<Quiz> getAllQuizzes() {
         List<Quiz> quizzes = new ArrayList<>();
@@ -292,7 +299,7 @@ public class DbHelper extends SQLiteOpenHelper {
         return quizzes;
     }
 
-
+    //deleting a quiz and its associated questions. also deltes results associated with that quiz
     public void deleteQuizAndQuestions(int quizId) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -306,25 +313,26 @@ public class DbHelper extends SQLiteOpenHelper {
             do {
                 int quizResultId = cursor.getInt(0);
 
-                // Delete all question results associated with the quiz result
+                // delete all question results associated with the quiz result
                 db.delete(TABLE_QUESTION_RESULT, COLUMN_QUIZ_RESULT_ID_REF + " = ?", new String[]{String.valueOf(quizResultId)});
 
-                // Delete the quiz result
+                // delete the quiz result
                 db.delete(TABLE_QUIZ_RESULT, COLUMN_ID + " = ?", new String[]{String.valueOf(quizResultId)});
 
             } while (cursor.moveToNext());
         }
 
-        // Delete all questions associated with the quiz
+        // delete all questions associated with the quiz
         db.delete(TABLE_QUESTION, COLUMN_QUIZ_ID + " = ?", new String[]{String.valueOf(quizId)});
 
-        // Delete the quiz
+        // delete the quiz
         db.delete(TABLE_QUIZ, COLUMN_ID + " = ?", new String[]{String.valueOf(quizId)});
 
         db.close();
     }
 
 
+    //gets a quiz from id
     @SuppressLint("Range")
     public Quiz getQuiz(int quizId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -356,7 +364,6 @@ public class DbHelper extends SQLiteOpenHelper {
             } while (questionCursor.moveToNext());
         }
 
-        // don't forget to close the cursors
         questionCursor.close();
         cursor.close();
         db.close();

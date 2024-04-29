@@ -1,5 +1,6 @@
 package com.example.quizmaster;
 
+//class for storing questions
 public class Question {
     private long id;
     private String text;
@@ -10,6 +11,7 @@ public class Question {
     private long quizId;
 
     public Question(String text, String correctAnswer, String wrongAnswerA, String wrongAnswerB, String wrongAnswerC, long quizId) {
+        // id is updated when question is inserted into the db
         this.id = -1;
         this.text = text;
         this.correctAnswer = correctAnswer;
@@ -19,6 +21,7 @@ public class Question {
         this.quizId = quizId;
     }
 
+    //second constructor for making blank question
     public Question() {
         this.id = -1;
         this.text = "";

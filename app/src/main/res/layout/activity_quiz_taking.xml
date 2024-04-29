@@ -6,6 +6,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:padding="10dp">
 
+    <!-- title of quiz  -->
 <TextView
     android:id="@+id/quizTitle"
     android:layout_width="0dp"
@@ -19,6 +20,7 @@ android:padding="10dp">
     app:layout_constraintEnd_toEndOf="parent"
     android:layout_marginTop="50dp"/>
 
+    <!-- question  -->
 <TextView
     android:id="@+id/questionField"
     android:layout_width="0dp"
@@ -32,6 +34,7 @@ android:padding="10dp">
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- answer button 1  -->
     <Button
         android:id="@+id/answer1"
         android:layout_width="0dp"
@@ -46,6 +49,7 @@ android:padding="10dp">
         android:layout_margin="5dp"
         android:padding="5dp"/>
 
+    <!-- answer button 2  -->
     <Button
         android:id="@+id/answer2"
         android:layout_width="0dp"
@@ -60,6 +64,7 @@ android:padding="10dp">
         android:layout_margin="5dp"
         android:padding="5dp"/>
 
+    <!-- answer button 3  -->
     <Button
         android:id="@+id/answer3"
         android:layout_width="0dp"
@@ -74,6 +79,7 @@ android:padding="10dp">
         android:layout_margin="5dp"
         android:padding="5dp"/>
 
+    <!-- answer button 4  -->
     <Button
         android:id="@+id/answer4"
         android:layout_width="0dp"
@@ -88,6 +94,7 @@ android:padding="10dp">
         android:layout_margin="5dp"
         android:padding="5dp"/>
 
+    <!-- button for leaving the quiz  -->
     <Button
         android:id="@+id/stopQuiz"
         android:layout_width="wrap_content"

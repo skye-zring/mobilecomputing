@@ -1,5 +1,6 @@
 package com.example.quizmaster;
 
+//stores a question result
 public class QuestionResult {
     private long questionId;
     private long id;
