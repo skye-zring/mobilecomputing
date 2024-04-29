@@ -1,48 +1,75 @@
-<!-- question_form.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="10dp"
+    card_view:cardElevation="2dp"
+    card_view:cardCornerRadius="4dp">
 
-    <EditText
-        android:id="@+id/question_text"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Question Text" />
+        android:padding="10dp">
 
-    <!-- Correct Answer -->
-    <EditText
-        android:id="@+id/edit_correct_answer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Correct Answer" />
+        <!-- Field for entering question text -->
+        <EditText
+            android:id="@+id/question_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Question Text"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
-    <!-- Wrong -->
-    <EditText
-        android:id="@+id/edit_wrong1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Wrong" />
+        <!-- Correct Answer -->
+        <EditText
+            android:id="@+id/edit_correct_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/question_text"
+            android:hint="Correct Answer"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
-    <!-- Wrong -->
-    <EditText
-        android:id="@+id/edit_wrong2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Wrong" />
+        <!-- Wrong -->
+        <EditText
+            android:id="@+id/edit_wrong1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_correct_answer"
+            android:hint="Wrong"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
-    <!-- Wrong -->
-    <EditText
-        android:id="@+id/edit_wrong3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Wrong" />
+        <!-- Wrong -->
+        <EditText
+            android:id="@+id/edit_wrong2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_wrong1"
+            android:hint="Wrong"
+            android:imeOptions="actionNext"
+            android:inputType="text" />
 
-    <!-- Delete Question Button -->
-    <Button
-        android:id="@+id/delete_question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Question" />
+        <!-- Wrong -->
+        <EditText
+            android:id="@+id/edit_wrong3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_wrong2"
+            android:hint="Wrong"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
 
-</LinearLayout>
+        <!-- Delete Question Button -->
+        <Button
+            android:id="@+id/delete_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_wrong3"
+            android:backgroundTint="#EC7063"
+            android:text="Delete Question" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
